@@ -244,17 +244,21 @@ impl Color for LinColor {
 
     #[inline(always)]
     fn blend_over(self, other: Self) -> Self {
-        other + self * (1.0 - other.alpha())
+        other
     }
 
     #[inline(always)]
-    fn with_alpha(self, alpha: Scalar) -> Self {
-        self * (alpha as f32)
+    fn with_alpha(self, _alpha: Scalar) -> Self {
+        self
     }
 
     #[inline(always)]
     fn lerp(self, other: Self, t: f32) -> Self {
-        other * t + self * (1.0 - t)
+        if t > 0.5 {
+            other
+        } else {
+            self
+        }
     }
 }
 
